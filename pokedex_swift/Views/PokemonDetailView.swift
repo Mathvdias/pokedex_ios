@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct PokemonDetailView: View {
-    @StateObject var vm = ViewModel()
+    @EnvironmentObject var vm: ViewModel
     let pokemon: Pokemon
     
     var body: some View {
         VStack {
+            PokemonView(pokemon: pokemon )
             VStack(spacing: 10) {
                 Text("**ID**: \(vm.pokemonDetails?.id ?? 0)")
-                Text("**WEIGHT**: \(vm.pokemonDetails?.weight ?? 0) Kg")
-                Text("**HEIGHT**: \(vm.pokemonDetails?.height ?? 0) m")
+                Text("**WEIGHT**: \(vm.formatHW(value: vm.pokemonDetails?.weight ?? 0)) Kg")
+                Text("**HEIGHT**: \(vm.formatHW(value: vm.pokemonDetails?.height ?? 0)) m")
             }
+            .padding()
         }
         .onAppear {
             vm.getDetails(pokemon: pokemon)
